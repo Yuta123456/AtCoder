@@ -1,0 +1,5 @@
+data = list(map(int, input().split()))
+k = int(input())
+data.sort()
+data[-1] = data[-1] * (2 ** k)
+print(sum(data))
