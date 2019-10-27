@@ -7,8 +7,9 @@ t = ''.join(list(reversed(t)))
 #後ろから調べてく
 exit_flag = True
 for i in range(len(s)):
+    #逆から見ていき、一文字目が一致するかどうかの確認
     if s[i] == t[0] or s[i] == '?':
-        if i + len(t) >= len(s):
+        if i + len(t) > len(s):
             break
         for j in range(len(t)):
             if not (s[i + j] == t[j] or s[i + j] == '?'):

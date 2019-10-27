@@ -1,0 +1,7 @@
+s = input()
+A_index = s.index('A')
+s = list(s)
+s.reverse()
+s = "".join(s)
+Z_index = len(s) - s.index('Z')     
+print(Z_index - A_index)
