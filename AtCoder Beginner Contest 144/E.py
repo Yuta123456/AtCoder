@@ -12,16 +12,15 @@ x = [-1 for i in range(maxX + 1)]
 def is_able(low, up):
     target = (low + up) // 2
     print("{} {}".format(low, up))
-    if target >= maxX:
-        return 0
+
     if x[target] == 1 and x[target + 1] == 0:
         return target
     if check(target):
         x[target] = 1
-        return is_able(target, up)
+        return is_able(low, target)
     else:
         x[target] = 0
-        return is_able(low, target)
+        return is_able(target, up)
 def check(time):
     #time が可能かどうか
     practice = copy.deepcopy(k)
@@ -31,11 +30,6 @@ def check(time):
             if practice < 0:
                 return False
     return True
-print(is_able(0, maxX))
-
-
-
-
-
-
-
+x[0] = int(check(0))
+x[maxX] = int(check(maxX))
+#print(is_able(0, maxX))

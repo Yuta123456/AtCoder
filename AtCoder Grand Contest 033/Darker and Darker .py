@@ -1,8 +1,8 @@
 h, w = input()
-A = []
+Grid = []
 for i in range(h):
-    A.append(input())
+    Grid.append(list(input()))
 for i in range(h):
     for j in range(w):
-        if A[h][w] == "#":
+        if Grid[h][w] == "#":
             
