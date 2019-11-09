@@ -10,3 +10,15 @@ def primes(n):
         for j in range(i * 2, n + 1, i):
             is_prime[j] = False
     return [i for i in range(n + 1) if is_prime[i]]
+n = int(input())
+prime_list = primes(55555)
+ans = []
+count = 0
+
+for i in prime_list:
+    if i % 5 == 1:
+        ans.append(i)
+        count += 1
+    if count == n:
+        break
+print(" ".join(map(str, ans)))
