@@ -1,7 +1,7 @@
 import numpy as np
 from scipy.sparse.csgraph import dijkstra
 from scipy.sparse import csr_matrix
-inf = (10.0) ** 10
+inf = (2.0) ** (62-1)
 n, m = list(map(int, input().split()))
 #infを初期化
 graph = np.full((n+1,n+1), inf)
@@ -12,7 +12,7 @@ for i in range(1,n+1):
 for i in range(m):
     l, r, c = list(map(int, input().split()))
     graph[l][r] = min(graph[l][r],  c)
-    graph[r][l] = min(graph[r][l],  c)
+    #graph[r][l] = min(graph[r][l],  c)
 graph = dijkstra(csr_matrix(graph))
 #道がないなら‐１
 if graph[1][n] == inf:
