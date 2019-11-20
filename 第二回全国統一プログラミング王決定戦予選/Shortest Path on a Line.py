@@ -1,6 +1,8 @@
 import numpy as np
-from scipy.sparse.csgraph import dijkstra
+from scipy.sparse.csgraph import shortest_path
 from scipy.sparse import csr_matrix
+import sys
+sys.setrecursionlimit(200000)
 inf = (2.0) ** (62-1)
 n, m = list(map(int, input().split()))
 #infを初期化
@@ -12,8 +14,8 @@ for i in range(1,n+1):
 for i in range(m):
     l, r, c = list(map(int, input().split()))
     graph[l][r] = min(graph[l][r],  c)
-    #graph[r][l] = min(graph[r][l],  c)
-graph = dijkstra(csr_matrix(graph))
+    graph[r][l] = min(graph[r][l],  c)
+graph = shortest_path(csr_matrix(graph))
 #道がないなら‐１
 if graph[1][n] == inf:
     print(-1)
