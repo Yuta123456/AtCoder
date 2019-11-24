@@ -1,0 +1,7 @@
+n = int(input())
+a, b = map(int , input().split())
+p = list(map(int, input().split()))
+group_a = len([i for i in p if i <= a])
+group_b = len([i for i in p if i > a and i <= b])
+group_c = len([i for i in p if i > b])
+print(min(group_a, group_b, group_c))
