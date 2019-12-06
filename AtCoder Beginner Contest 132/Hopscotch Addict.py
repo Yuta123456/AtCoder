@@ -7,7 +7,9 @@ for i in range(m):
 start, goal = map(int, input().split())
 graph2 = np.zeros((n+1,n+1))
 np.dot(graph,graph,out = graph2)
+print(graph)
 np.dot(graph2,graph,out = graph)
+
 #一回けんけんぱした後のグラフがgraph
 for i in range(1,n+1):
     if graph[start][goal] >= 1:
