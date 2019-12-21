@@ -1,6 +1,3 @@
-import numpy as np
-a = np.array(
-    [[1,2,3],
-     [4,5,6],
-     [7,8,9]])
-print(a[[1,0,2], [2,2,2]])
+import math
+print(math.log(28/25))
+print(math.log(7/5))
