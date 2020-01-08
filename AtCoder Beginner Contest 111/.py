@@ -2,56 +2,37 @@ import collections
 n = int(input())
 v = list(map(int, input().split()))
 even = []
-even_c = 0
 odd = []
-odd_c = 0
-ans = 0
-for i in range(len(v)):
-    print(i)
+for i in range(n):
     if i % 2 == 0:
-        even.append(v[i])
-        even_c += 1
+        even += [v[i]]
     else:
-        odd.append(v[i])
-        odd_c += 1
-        
-even = collections.Counter(even)
-odd = collections.Counter(odd)
-even_max = max(list(even.items()), key = lambda x: x[1])
-odd_max = max(list(odd.items()), key = lambda x: x[1])
-if even_max[0] == odd_max[0]:
-    even_sec = [i for i in list(even.items()) if i[0] != even_max[0]] 
-    odd_sec = [i for i in list(odd.items()) if i[0] != odd_max[0]]
-    if len(even_sec) == 0 and len(odd_sec) == 0:
-        print(min(even_max[1], odd_max[1]))
-        exit()
-    if len(even_sec) == 0:
-        ans += min(even_max[1], odd_c - odd_max[1])
-        print(ans)
-        exit()
-    if len(odd_sec) == 0:
-        ans += min(odd_max[1], even_c - even_max[1])
-        print(ans)
-        exit()
-    even_sec = max(even_sec, key = lambda x: x[1])
-    odd_sec = max(odd, key = lambda x: x[1])
-    if even_max[1] > odd_max[1]:
-        ans += even_c - even_max[1]
-        ans += odd_c - odd_sec[1]
-    elif even_max[1] < odd_max[1]:
-        ans += odd_c - odd_max[1]
-        ans += even_c - even_sec[1]
-    else:
-        if odd_sec[1] < even_sec[1]:
-            ans += even_c - even_sec[1]
-            ans += odd_c - odd_max[1]
-        elif odd_sec[1] > even_sec[1]:
-            ans += odd_c - odd_sec[1]
-            ans += even_c - even_max[1]
-        else:
-            ans += even_c - even_max[1]
-            ans += odd_c - odd_sec[1]
+        odd += [v[i]]
+even_dict = collections.Counter(even)
+odd_dict = collections.Counter(odd)
+max_even = max(even_dict.items(), key = lambda x:x[1])
+max_odd = max(odd_dict.items(), key = lambda x:x[1])
+#最高の値が同じでない
+if max_even[0] != max_odd[0]:
+    print(len(even) - max_even[1] + len(odd) - max_odd[1])
 else:
-    ans += even_c - even_max[1]
-    ans += odd_c - odd_max[1]
-print(ans)
+    #同じだった場合
+    if max_even[1] == len(even) and max_odd[1] == len(odd):
+        second_even = (-1,0)
+        second_odd = (-1,0)
+    elif max_even[1] == len(even):
+        second_even = (-1,0)
+        second_odd = max([i for i in odd_dict.items() if i != max_odd], key = lambda x:x[1])
+    elif max_odd[1] == len(odd):
+        second_even = max([i for i in even_dict.items() if i != max_even], key = lambda x:x[1])
+        second_odd = (-1,0)
+    else:
+        second_even = max([i for i in even_dict.items() if i != max_even], key = lambda x:x[1])
+        second_odd = max([i for i in odd_dict.items() if i != max_odd], key = lambda x:x[1])
+    #二つ目に大きいやつも同じかどうか
+    if second_even[1] > second_odd[1]:
+        print(len(even) - second_even[1] + len(odd) - max_odd[1])
+    else:
+        print(len(even) - max_even[1] + len(odd) - second_odd[1])
+
+

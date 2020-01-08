@@ -1,0 +1,6 @@
+a = int(input())
+b = int(input())
+ans = set([1,2,3])
+w = set([a,b])
+ans = list(ans - w)
+print("{}".format(ans[0]))

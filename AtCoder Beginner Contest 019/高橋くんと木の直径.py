@@ -1,11 +1,21 @@
+import sys
 n = int(input())
-a = list(map(int, input().split()))
-a.sort()
-k = set(a)
+v = 0
+max_di = 0
+for i in range(2,n+1):
+    print("? {} {}".format(1,i))
+    sys.stdout.flush()
+    inp = int(input())
+    if max_di < inp:
+        v = i
+        max_di = inp
 ans = 0
-for i in range(n):
-    if a[i] in k:
-        ans += 1
-    if 2 * a[i] in k:
-        k.remove(2 * a[i])
-print(ans)
+for i in range(1,n+1):
+    if v == i:
+        continue
+    print("? {} {}".format(v,i))
+    sys.stdout.flush()
+    inp = int(input())
+    if ans < inp:
+        ans = inp
+print("! {}".format(ans))

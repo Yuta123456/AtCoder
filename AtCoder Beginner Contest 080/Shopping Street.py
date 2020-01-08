@@ -10,23 +10,17 @@ for i in range(n):
 for i in range(n):
     point.append(list(map(int, input().split())))
 #最大値
-data = itertools.product(range(2), repeat = 10)
-
-max_point = - (10 ** 7)
-def calcMax(data):
-    global max_point
-    earnPoint = 0
-    for i in range(2 ** 10):
-        if 1 in data[i]:
-            for i in range(n):
-                count = 0
-                for j in range(10):
-                    if shopData[i][j] == data[j] and data[j] == 1:
-                         count += 1
-                earnPoint += point[i][count]
-        else:
-            return
-        if earnPoint > max_point:
-            max_point = earnPoint
-start = [None] * 10
+data = list(itertools.product(range(2), repeat = 10))
+del data[0]
+max_point = - (10 ** 9)
+for shop in data:
+    cand = 0
+    for i in range(len(shopData)):
+        count = 0
+        for j in range(10):
+            if shop[j] == 1 and shopData[i][j] == 1:
+                count += 1
+        cand += point[i][count]
+    max_point = max(max_point, cand)
 print(max_point)
+                

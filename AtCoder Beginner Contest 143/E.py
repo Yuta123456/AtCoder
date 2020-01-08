@@ -1,19 +1,16 @@
-import math
-from scipy.sparse.csgraph import shortest_path
+import sys
+input = sys.stdin.readline
 #道がない場合、infで初期化したい
-inf = 10 ** 9 + 1
+inf = 10 ** 13 + 1
 #input
-n, m, l =list(map(int, input().split()))
+n, m, l = list(map(int, input().split()))
 way = [[inf for i in range(n)] for j in range(n)]
-oil = [[inf for i in range(n)] for j in range(n)]
+oil = [[400 for i in range(n)] for j in range(n)]
 
 for i in range(m):
     a, b, c, = list(map(int, input().split()))
     way[a - 1][b - 1] = c
     way[b - 1][a - 1] = c
-    if c <= l:
-        oil[a - 1][b - 1] = 1
-        oil[b - 1][a - 1] = 1
 
 q = int(input())
 
@@ -23,34 +20,32 @@ for i in range(q):
     query.append(list(map(int, input().split())))
 
 #ワーシャルフロイド法を使い、各道への最短経路を調べる。計算量はO(N**3)
+for k in range(n):
+    for i in range(n):
+        for j in range(n):
+            if i == j:
+                way[i][j] = 0
+                continue
+            way[i][j] = min(way[i][j],way[i][k] + way[k][j])
+            
+#oilの補給できる回数もワーシャルフロイドで求める。まず、一補給でいけるところに辺を張る
 for i in range(n):
     for j in range(n):
-        for k in range(n):
-            way[i][k] = min(way[i][k],way[i][j] + way[j][k])
-            if i == k:
-                way[i][k] = 0
-#oilの補給できる回数もワーシャルフロイドで求める。これは補給可能な数,最小値が求まるらしい。よくわからん
-for i in range(n):
-    for j in range(n):
-        for k in range(n):
-            if oil[i][k] != inf:
-                if way[i][k]
+        if i == j:
+            oil[i][j] = 0
+        if way[i][j] <= l:
+            oil[i][j] = oil[j][i] = 1
+#の後でワーシャルフロイド
+for k in range(n):
+    for i in range(n):
+        for j in range(n):
+            if i == j:
+                oil[i][j] = 0
+                continue
+            oil[i][j] = min(oil[i][j],oil[i][k] + oil[k][j])
 
 for i in range(q):
     ans = oil[query[i][0] - 1][query[i][1] - 1] - 1
-    if way[query[i][0] - 1][query[i][1] - 1] == inf:
+    if way[query[i][0] - 1][query[i][1] - 1] >= inf or oil[query[i][0] - 1][query[i][1] - 1] == 400:
         ans = -1
     print(ans)
-
-
-
-
-
-
-
-
-
-
-
-
-#aaaaa
