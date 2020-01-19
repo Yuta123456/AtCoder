@@ -1,17 +1,21 @@
-def bfs(row, column, count,data):
-    becter = [-1,1]
-    queue = collections.deque()
-    queue.append([column, row,count])
-    while len(queue) != 0:
-        v = queue.popleft()
-        if v[0] < 0 or v[1] < 0 or v[0] >= h or v[1] >= w:
-            continue
-        if data[v[0]][v[1]] != '#':
+#x,y渡すと、（ｈ、ｗ）に入ってるかどうか判定
+def check(s,t):
+    if (0 <=  s <= h - 1) and (0 <= t <= w - 1):
+        return True
+    else:
+        return False
 
-            data[v[0]][v[1]] = '#'
-            v[2] += 1
-            ans[v[0]][v[1]] = min(ans[v[0]][v[1]], v[2])
-            queue.append([v[0] + 1, v[1],v[2]])
-            queue.append([v[0], v[1] + 1,v[2]])
-            queue.append([v[0] - 1, v[1],v[2]])
-            queue.append([v[0], v[1] - 1,v[2]])
+#graph => そこまでの距離を保存した二次元配列　grid=>与えられた迷路
+def bfs(que):
+    finished = set()
+    while que:
+        x , y, cost = que.popleft()
+        if (not check(x,y) ) or grid[y][x] == '#':
+            continue
+        if (x,y) not in finished:
+            finished.add((x,y))
+            graph[y][x] = cost
+            que.append([x+1,y,cost+1])
+            que.append([x, y+1, cost+1])
+            que.append([x-1,y,cost+1])
+            que.append([x,y-1,cost+1])
