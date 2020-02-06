@@ -16,5 +16,3 @@ def extgcd(a,b):
 def mod_inv(a,mod):
     x = extgcd(a,mod)[0]
     return (mod+x%mod)%mod
-print(mod_inv(7,4))
-print((54%4)*mod_inv(7,4)%4)

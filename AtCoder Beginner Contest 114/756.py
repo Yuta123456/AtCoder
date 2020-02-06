@@ -10,21 +10,10 @@ def primes(n):
         for j in range(i * 2, n + 1, i):
             is_prime[j] = False
     return [i for i in range(n + 1) if is_prime[i]]
+"""
+「約数を x 個持つ数の個数」を 
+ x の小さい順に求めていく解法。
+"""
 n = int(input())
-prime_list = primes(n)
-factor = {}
-for i in prime_list:
-    factor[i] = 0
-for i in range(2,n+1):
-    num_copy = i
-    #prime_listのための添え字
-    j = 1
-    while num_copy != 1:
-        if num_copy % prime_list[j] == 0:
-            num_copy /= prime_list[j]
-            prime_list[j] += 1
-        else:
-            j += 1
-        
-
-
+dp = [0 for i in range(76)]
+dp[1] = 1

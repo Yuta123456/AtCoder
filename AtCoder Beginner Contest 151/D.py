@@ -35,7 +35,3 @@ for i in range(h):
                 if graph[p][q] < inf:
                     ans = max(ans, graph[p][q])
 print(ans)
-
-
-    
-

@@ -1,10 +1,28 @@
 h, w = list(map(int, input().split()))
-data = []
+graph = []
+def check(s,t):
+    if (0 <=  s <= w - 1) and (0 <= t <= h - 1):
+        return True
+    else:
+        return False
+def check_around(x,y):
+    if check(x+1,y) and graph[y][x+1] == '#':
+        return True
+    if check(x,y+1) and graph[y+1][x] == '#':
+        return True
+    if check(x-1,y) and graph[y][x-1] == '#':
+        return True
+    if check(x,y-1) and graph[y-1][x] == '#':
+        return True
+    return False
 for i in range(h):
-    data.append(list(input())
+    graph.append(list(input()))
 for i in range(h):
     for j in range(w):
-        if data[i][j] == '#':
-            flag = 0
-            if i > 0 and i < h - 1 and j > 0 and j < w - 1:
+        if graph[i][j] == '#':
+            if  not check_around(j,i):
+                print("No")
+                exit()
+print("Yes")
+            
                 
