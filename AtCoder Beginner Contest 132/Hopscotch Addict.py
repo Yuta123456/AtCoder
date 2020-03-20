@@ -1,19 +1,29 @@
-import numpy as np
+from collections import deque
 n, m = map(int, input().split())
-graph = np.zeros((n+1,n+1))
-for i in range(m):
-    u, v = map(int, input().split())
-    graph[u][v] = 1
-start, goal = map(int, input().split())
-graph2 = np.zeros((n+1,n+1))
-np.dot(graph,graph,out = graph2)
-print(graph)
-np.dot(graph2,graph,out = graph)
+inf = 10**9
+def bfs(start):
+    dist = [inf for i in range((n+1) * 3)]
+    que = deque()
+    que.append(start)
+    finished = set()
+    dist[start] = 0
+    while que:
+        node = que.popleft()
+        if node not in finished:
+            finished.add(node)
+            for i in adjacent_list[node]:
+                dist[i] = min(dist[i], dist[node] + 1)
+                que.append(i)
+    return dist
 
-#一回けんけんぱした後のグラフがgraph
-for i in range(1,n+1):
-    if graph[start][goal] >= 1:
-        print(i)
-        exit()
-    np.dot(graph,graph,out = graph)
-print(-1)
+adjacent_list = [[] for i in range((n+1)*3)]
+for _ in range(m):
+    u, v = map(int, input().split())
+    for i in range(3):
+        adjacent_list[u*3 + i].append(v*3 +((i+1)%3))
+start, goal = map(int, input().split())
+graph = bfs(start*3)
+if graph[goal*3] != inf:
+    print(int(graph[goal*3]) // 3)
+else:
+    print(-1)

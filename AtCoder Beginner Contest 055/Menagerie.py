@@ -1,77 +1,68 @@
-import copy
 n = int(input())
-q = input()
-a = ["." for i in range(n)]
-
-def checkAns(data):
-    #data[0]の処理
-    if data[0] == "S":
-        if q[0] == 'o':
-            data[-1] = data[1]
-        else:
-            if data[1] == "S":
-                data[-1] = "W"
-            else:
-                data[-1] = "S"
-    else:
-        if q[0] != 'o':
-            data[-1] = data[1]
-        else:
-            if data[1] == "S":
-                data[-1] = "W"
-            else:
-                data[-1] = "S"
-    
-    check = copy.deepcopy(data[-1])
-    #その後の処理
+s = input()
+#最初の二人だけ全探索
+#x -> 狼
+#o -> 羊
+def check(li):
     for i in range(1,n-1):
-        if data[i] == "S":
-            if q[i] == "o":
-                data[i+1] = data[i-1]
-            else:
-                #罰だった場合の処理
-                if data[i - 1] == "W":
-                    data[i + 1] = "S"
+        if li[i] == 'S':
+            if li[i-1] == 'S':
+                if s[i] == 'o':
+                    li += ['S']
                 else:
-                    data[i + 1] == "W"
+                    li += ['W']
+            else:
+                if s[i] == 'o':
+                    li += ['W']
+                else:
+                    li += ['S']
         else:
-            if q[i] != "o":
-                data[i + 1] = data[i - 1]
-            else:
-                #罰だった場合の処理
-                if data[i - 1] == "W":
-                    data[i + 1] = "S"
+            if li[i-1] == 'S':
+                if s[i] == 'o':
+                    li += ['W']
                 else:
-                    data[i + 1] == "W"
-    if check == data[-1]:
-        return data
+                    li += ['S']
+            else:
+                if s[i] == 'o':
+                    li += ['S']
+                else:
+                    li += ['W']
+    if li[-1] == 'S':
+        if s[-1] == 'o':
+            if li[-2] != li[0]:
+                return False
+        else:
+            if li[-2] == li[0]:
+                return False
     else:
-        return False
-a[0] = "S"
-a[1] = "S"
-if checkAns(a):
-    ans = checkAns(a)
-    ans = "".join(ans)
-    ans = ans.replace(".", 'W')
-    print(ans)
-    exit()
+        if s[-1] == 'o':
+            if li[-2] == li[0]:
+                return False
+        else:
+            if li[-2] != li[0]:
+                return False
 
-a[0] = "S"
-a[1] = "W"
-if checkAns(a):
-    print(a)
-    exit()
-
-a[0] = "W"
-a[1] = "W"
-if checkAns(a):
-    print(a)
-    exit()
-
-a[0] = "W"
-a[1] = "S"
-if checkAns(a):
-    print(a)
-    exit()
-
+    if li[0] == 'S':
+        if s[0] == 'o':
+            if li[-1] != li[1]:
+                return False
+        else:
+            if li[-1] == li[1]:
+                return False
+    else:
+        if s[0] == 'o':
+            if li[-1] == li[1]:
+                return False
+        else:
+            if li[-1] != li[1]:
+                return False
+    return li
+for i in range(2):
+    for j in range(2):
+        s1 = 'S' if i == 1 else 'W'
+        s2 = 'S' if j == 1 else 'W'
+        k = check([s1,s2])
+        if k:
+            print("".join(k))
+            exit()
 print(-1)

@@ -16,11 +16,11 @@ def extgcd(a,b):
 def mod_inv(a,mod):
     x = extgcd(a,mod)[0]
     return (mod+x%mod)%mod
-def mod_factorial(n):
+def mod_factorial(n,mod):
     ans = 1
     while n >= 2:
         ans  = (ans * n) % mod
         n -= 1
     return ans
-def mod_combination(n,k):
-    return mod_factorial(n+k) * mod_inv(mod_factorial(n), mod) * mod_inv(mod_factorial(k), mod)
+def mod_combination(n,k,mod):
+    return mod_factorial(n,mod) * mod_inv(mod_factorial(k,mod), mod) * mod_inv(mod_factorial(n-k,mod), mod)

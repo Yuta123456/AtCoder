@@ -16,9 +16,15 @@ for i in range(n):
         odd_count += 1
 ans = 0
 if p % 2 == 0:
-    ans += 2 ** even_count
-    ans += combi(odd_count, 2)
+    ans += pow(2,even_count)
+    tmp = 0
+    for i in range(0,odd_count+1,2):
+        tmp += combi(odd_count,i)
+    ans *= tmp
 else:
-    ans
-    ans += combi(odd_count,2)
+    ans += pow(2,even_count)
+    tmp = 0
+    for i in range(1,odd_count+1,2):
+        tmp += combi(odd_count,i)
+    ans *= tmp
 print(int(ans))

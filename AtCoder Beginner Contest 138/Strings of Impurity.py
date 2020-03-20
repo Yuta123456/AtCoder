@@ -1,24 +1,28 @@
+import bisect
 s = input()
 t = input()
 data = {}
-max = len(s)
-for i in range(24):
-    data[chr(i + ord('a'))] = max + 1
+max_s = len(s) + 1
+for i in range(26):
+    data[chr(i + ord('a'))] = []
 for i in range(len(s)):
-    if data[s[i]] > i + 1:
-        data[s[i]] = i + 1
+    data[s[i]].append(i+1)
+for i in range(26):
+    data[chr(i + ord('a'))].append(max_s)
+pre = 0
 ans = 0
-pre = max
 for i in range(len(t)):
-    if data[t[i]] == max + 1:
+    char = t[i]
+    if len(data[char]) == 1:
         print(-1)
         exit()
     else:
-        if pre < data[t[i]]:
-            ans += (data[t[i]] - pre)
-            pre = data[t[i]]
+        index = bisect.bisect_left(data[char], pre+1)
+        if data[char][index] == max_s:
+            ans += len(s) - pre
+            pre = data[char][0]
+            ans += pre
         else:
-            ans += (max + data[t[i]] - pre)
-            pre = data[t[i]]
-    
+            ans += data[char][index] - pre
+            pre = data[char][index]
 print(ans)

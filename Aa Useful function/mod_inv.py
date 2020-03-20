@@ -1,3 +1,4 @@
+import math
 #互いに素なa,bについて、a*x+b*y=1の一つの解
 def extgcd(a,b):
     r = [1,0,a]
@@ -16,3 +17,6 @@ def extgcd(a,b):
 def mod_inv(a,mod):
     x = extgcd(a,mod)[0]
     return (mod+x%mod)%mod
+print(pow(5,-1,10**9+7))
+print(a+n-1//a)
+print(math.ceil(n/a))

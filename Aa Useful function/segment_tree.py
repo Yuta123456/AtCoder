@@ -41,3 +41,4 @@ def query(p,q):
 ide_ele =
 num =2**(n-1).bit_length()
 seg=[ide_ele]*(2*num - 1)
+#阪堺区間に注意

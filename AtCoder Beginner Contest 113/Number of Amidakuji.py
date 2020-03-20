@@ -1,29 +1,44 @@
 h,w,k = map(int, input().split())
 mod = 10**9+7
-def extgcd(a,b):
-    r = [1,0,a]
-    w = [0,1,b]
-    while w[2]!=1:
-        q = r[2]//w[2]
-        r2 = w
-        w2 = [r[0]-q*w[0],r[1]-q*w[1],r[2]-q*w[2]]
-        r = r2
-        w = w2
-    #[x,y]
-    return [w[0],w[1]]
-def power_func(a,n,p):
-  bi=str(format(n,"b"))#2進表現に
-  res=1
-  for i in range(len(bi)):
-    res=(res*res) %p
-    if bi[i]=="1":
-      res=(res*a) %p
-  return res
-# aの逆元(mod m)を求める。(aとmは互いに素であることが前提)
-#a/b = a*(b`)となるb`を求める
-def mod_inv(a,mod):
-    x = extgcd(a,mod)[0]
-    return (mod+x%mod)%mod
-p = power_func(w-1,h,mod)
-p *= mod_inv(h, mod)
-print(p%mod)
+row_amida = []
+def make_amida(pre, li):
+	if len(li) == w-1:
+		row_amida.append(li)
+	else:
+		if pre == 0:
+			make_amida(1, li + [1])
+		make_amida(0, li + [0])
+make_amida(0,[])
+dp = [[0 for i in range(w+1)] for j in range(h+1)]
+dp[0][1] = 1 #dp[i][j] := i行目まで決めたときのj列目にたどり着くあみだの本数
+for i in range(1,h+1):
+	for j in range(1,w+1):
+		left_to_cur = 0
+		up_to_cur = 0
+		right_to_cur = 0
+		for p in range(len(row_amida)):
+			upflag = True
+			if j != 1 and row_amida[p][j-2] == 1:
+				left_to_cur += 1
+				upflag = False
+			if j != w and row_amida[p][j-1] == 1:
+				right_to_cur += 1
+				upflag = False
+			if upflag:
+				up_to_cur += 1
+		if j != 1:
+			left_to_cur = (left_to_cur * dp[i-1][j-1]) % mod
+		if j != w:
+			right_to_cur = (right_to_cur * dp[i-1][j+1]) % mod
+		up_to_cur = (up_to_cur * dp[i-1][j]) % mod
+		dp[i][j] = right_to_cur + left_to_cur + up_to_cur
+		dp[i][j] %= mod
+print(dp[-1][k])
+
+
+
+
+
+
+
+  
