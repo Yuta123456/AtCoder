@@ -3,22 +3,50 @@ data = []
 for i in range(n):
     data.append(list(map(int, input().split())))
 data.sort()
-data.reverse()
-cur_max = 10**6
-pre_2 = 0
-pre_1 = 10**6
-ans = 0
-for i in range(n):
-    if pre_1 != data[i][0]:
-        if pre_2 != -1:
-            cur_max = pre_2
-            ans += 1
-        if data[i][1] < cur_max:
-            pre_2 = data[i][1]
-        else:
-            pre_2 = -1
-    else:
-        if  pre_2 < data[i][1] < cur_max:
-            pre_2 = data[i][1]
-    pre_1 = data[i][0]
+#####segfunc######
+#def segfunc(x,y):
+#    return 
+
+def init(init_val):
+    #set_val
+    for i in range(len(init_val)):
+        seg[i+num-1]=init_val[i]   
+    #built
+    for i in range(num-2,-1,-1) :
+        seg[i]=segfunc(seg[2*i+1],seg[2*i+2]) 
     
+def update(k,x):
+    k += num-1
+    seg[k] = x
+    while k:
+        k = (k-1)//2
+        seg[k] = segfunc(seg[k*2+1],seg[k*2+2])
+    
+def query(p,q):
+    if q<=p:
+        return ide_ele
+    p += num-1
+    q += num-2
+    res=ide_ele
+    while q-p>1:
+        if p&1 == 0:
+            res = segfunc(res,seg[p])
+        if q&1 == 1:
+            res = segfunc(res,seg[q])
+            q -= 1
+        p = p//2
+        q = (q-1)//2
+    if p == q:
+        res = segfunc(res,seg[p])
+    else:
+        res = segfunc(segfunc(res,seg[p]),seg[q])
+    return res
+
+#####単位元######
+ide_ele = 0
+data = []
+num =2**(n-1).bit_length()
+seg=[ide_ele]*(2*num - 1)
+#阪堺区間に注意
+#dpを使いたいんだけど、10**10の配列が作れないから、dict型を使う
+for i in range(n):

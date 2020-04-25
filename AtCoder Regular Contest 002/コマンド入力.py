@@ -1,27 +1,16 @@
 n = int(input())
 c = input()
-com_dict = dict()
-for i in range(n-1):
-    temp = c[i] + c[i+1]
-    if temp in com_dict:
-        com_dict[temp] += 1
-    else:
-        com_dict[temp] = 1
-com_list = list(com_dict.items())
-max_com = max(com_list, key=lambda x:x[1])
-c = c.replace(max_com[0], "L")
-
-com_dict = dict()
-for i in range(len(c)-1):
-    if c[i] == "L" or c[i+1] == "L":
-        continue
-    temp = c[i] + c[i+1]
-    if temp in com_dict:
-        com_dict[temp] += 1
-    else:
-        com_dict[temp] = 1
-com_list = list(com_dict.items())
-max_com = max(com_list, key=lambda x:x[1])
-c = c.replace(max_com[0], "R")
-
-print(len(c))
+word = ['A','B','X','Y']
+ans = 10**9
+for one in word:
+    for two in word:
+        for three in word:
+            for four in word:
+                q = one + two
+                r = three + four
+                first = c.replace(q,'L')
+                first = first.replace(r,'R')
+                second = c.replace(r,'L')
+                second = first.replace(q, 'R')
+                ans = min(len(first), len(second), ans)
+print(ans)

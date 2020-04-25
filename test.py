@@ -1,10 +1,22 @@
-A = [[1,2,3], [4,5,6], [7,8,9]]
-B = [[4,5,6], [6,7,8], [8,6,7]]
-C = [[3,2,3], [5,7,6], [8,7,6]]
-import numpy as np
-K = np.dot(A,B)
-print("(AB)C = {}".format(np.dot(K,C)))
-
-K = np.dot(B,C)
-
-print("A(BC) = {}".format(np.dot(A,K)))
+N,R = map(int, input().split())
+S = list(input())
+perfect = ['o']*N
+res = 0
+k = 0
+r_i = 0
+for i in range(N):
+    if S[i] == ".":
+        r_i = i
+while S != perfect:
+    if k+R-1 == r_i:
+        res += 1
+        break
+    if S[k] == '.':
+        res += 1
+        for i in range(k,min(k+R,N)):
+            S[i] = 'o'
+    else:
+        k += 1
+        res += 1
+print(res)
+#.o..o.

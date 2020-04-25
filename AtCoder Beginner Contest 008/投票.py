@@ -6,4 +6,4 @@ for i in range(n):
         candidate[s] += 1
     else:
         candidate[s] = 1
-print(max(candidate, key = lambda x:candidate[x]))
+print(max(candidate, key = lambda x:candidate[x])
