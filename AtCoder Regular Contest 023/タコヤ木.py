@@ -1,4 +1,6 @@
 import math
+import sys
+sys.setrecursionlimit(10**8)
 n = int(input())
 a = list(map(int, input().split()))
 memo = dict()
@@ -20,15 +22,11 @@ def extgcd(a,b):
 def mod_inv(a,mod):
     x = extgcd(a,mod)[0]
     return (mod+x%mod)%mod
-def mod_factorial(n,mod):
-    if n in memo:
-        return memo[n]
-    else:
-        
-    return 
 def mod_combination(n,k,mod):
-    return mod_factorial(n,mod) * mod_inv(mod_factorial(k,mod), mod) * mod_inv(mod_factorial(n-k,mod), mod)
-ans = 0
+    if k == 0:
+        return 1
+    return (n*mod_inv(k,mod) * mod_combination(n-1,k-1,mod) ) % mod
+ans = 1
 mod = 10**9+7
 start_num = -1
 end_num = -1
@@ -44,7 +42,7 @@ while i < n:
         num_count = last_num - start_num + 1
         if num_count == 1:
             continue
-        ans += mod_combination(num_count + count - 1, count, mod)
+        ans *= mod_combination(num_count + count - 1, count, mod)
         ans %= mod
     else:
         i += 1

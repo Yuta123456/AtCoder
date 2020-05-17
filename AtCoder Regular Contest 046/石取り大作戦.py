@@ -1,4 +1,14 @@
 n = int(input())
 a,b = map(int, input().split())
-#残りi個の時、高橋君が勝つ→True 負ける->False
-dp = [False for i in range(n+1)]
+if n <= a:
+    print("Takahashi")
+else:
+    if a == b:
+        if n % (a+1) == 0:
+            print("Aoki")
+        else:
+            print("Takahashi")
+    elif  a > b:
+        print("Takahashi")
+    else:
+        print("Aoki")

@@ -1,4 +1,4 @@
-#互いに素なa,bについて、a*x+b*y=1の一つの解
+n = 100
 def extgcd(a,b):
     r = [1,0,a]
     w = [0,1,b]
@@ -13,14 +13,13 @@ def extgcd(a,b):
 
 # aの逆元(mod m)を求める。(aとmは互いに素であることが前提)
 #a/b = a*(b`)となるb`を求める
+mod = 10**9+7
 def mod_inv(a,mod):
     x = extgcd(a,mod)[0]
     return (mod+x%mod)%mod
-def mod_factorial(n,mod):
-    ans = 1
-    while n >= 2:
-        ans  = (ans * n) % mod
-        n -= 1
-    return ans
-def mod_combination(n,k,mod):
-    return mod_factorial(n,mod) * mod_inv(mod_factorial(k,mod), mod) * mod_inv(mod_factorial(n-k,mod), mod)
+combi = [0 for i in range(n+1)]
+combi[0] = 1
+print(n)
+for i in range(1,n+1):
+    combi[i] = (combi[i-1]*(n-i+1)*mod_inv(i,mod)) % mod
+print(combi)

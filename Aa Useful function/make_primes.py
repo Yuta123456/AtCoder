@@ -10,3 +10,4 @@ def primes(n):
         for j in range(i * 2, n + 1, i):
             is_prime[j] = False
     return [i for i in range(n + 1) if is_prime[i]]
+print(primes(100))

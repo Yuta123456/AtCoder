@@ -1,5 +1,5 @@
 from heapq import heappush, heappop
-def dijkstra(start):
+def dijkstra(start,graph):
     INF = 10 ** 15
     dist = [INF] * (n+1)
     dist[start] = 0

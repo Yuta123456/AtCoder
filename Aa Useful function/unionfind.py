@@ -26,3 +26,4 @@ def same(x,y):
 #xが属する集合の個数
 def size(x):
     return -par[find(x)]
+par = [-1]*n

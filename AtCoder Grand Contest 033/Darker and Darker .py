@@ -15,25 +15,21 @@ def check(s,t):
 def bfs(que):
     finished = set()
     while que:
-        x , y, cost = que.popleft()
-        if (x,y) not in finished and graph[y][x] > cost:
-            finished.add((x,y))
-            graph[y][x] = cost
-            if check(y,x+1):
-                que.append([x+1,y,cost+1])
-            if check(y+1,x):
-                que.append([x, y+1, cost+1])
-            if check(y,x-1):
-                que.append([x-1,y,cost+1])
-            if check(y-1,x):
-                que.append([x,y-1,cost+1])
+        x ,y = que.popleft()
+        if y*w+x not in finished:
+            finished.add(y*w+x)
+            for n_x,n_y in [(x+1,y),(x,y+1),(x-1,y),(x,y-1)]:
+                if check(n_y,n_x) and graph[n_y][n_x] > graph[y][x] + 1:
+                    graph[n_y][n_x] = graph[y][x] + 1
+                    que.append((n_x,n_y))
 for i in range(h):
     grid.append(list(input()))
 que = deque()
 for i in range(h):
     for j in range(w):
         if grid[i][j] == "#":
-            que.append((j,i,0))
+            graph[i][j] = 0
+            que.append((j,i))
 bfs(que)
 ans = 0
 for i in range(h):

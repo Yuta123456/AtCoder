@@ -1,22 +1,39 @@
-N,R = map(int, input().split())
-S = list(input())
-perfect = ['o']*N
-res = 0
-k = 0
-r_i = 0
-for i in range(N):
-    if S[i] == ".":
-        r_i = i
-while S != perfect:
-    if k+R-1 == r_i:
-        res += 1
+import collections
+n,k=map(int,input().split())
+a=list(map(int,input().split()))
+ans=[]
+now=0
+for i in range(n*2):
+    ans.append(a[now])
+    now=a[now]-1
+#print(ans)
+
+#変更
+passed = set()
+ac = -1
+for i in range(len(ans)):
+    if ans[i] in passed:
+        ac = ans[i]
         break
-    if S[k] == '.':
-        res += 1
-        for i in range(k,min(k+R,N)):
-            S[i] = 'o'
     else:
-        k += 1
-        res += 1
-print(res)
-#.o..o.
+        passed.add(ans[i])
+#print(ac)
+index=-1
+index2=-1
+
+for i in range(len(ans)):
+    if ans[i]==ac:
+        if index==-1:        
+            index=i
+        else:
+            index2=i
+#print(index,index2)
+#print((k-index-1)%(index2-index))
+#print(ans)
+if k < index:
+    print(ans[k])
+else:
+    k -= (index + 1)
+    ans = ans[index:]
+    print(ans[k % (index2 - index)])
+

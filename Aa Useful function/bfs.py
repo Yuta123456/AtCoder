@@ -9,13 +9,10 @@ def check(s,t):
 def bfs(que):
     finished = set()
     while que:
-        x , y, cost = que.popleft()
-        if (not check(x,y) ) or grid[y][x] == '#':
-            continue
-        if (x,y) not in finished:
-            finished.add((x,y))
-            graph[y][x] = cost
-            que.append([x+1,y,cost+1])
-            que.append([x, y+1, cost+1])
-            que.append([x-1,y,cost+1])
-            que.append([x,y-1,cost+1])
+        x ,y = que.popleft()
+        if y*w+x not in finished:
+            finished.add(y*w+x)
+            for n_x,n_y in [(x+1,y),(x,y+1),(x-1,y),(x,y-1)]:
+                if check(n_y,n_x) and graph[n_y][n_x] > graph[y][x] + 1:
+                    graph[n_y][n_x] = graph[y][x] + 1
+                    que.append((n_x,n_y))
