@@ -1,0 +1,8 @@
+n = int(input())
+x = list(map(int, input().split()))
+m = sum([abs(i) for i in x])
+e = pow(sum([i * i for i in x]), 0.5)
+c = max([abs(i) for i in x])
+print(m)
+print(e)
+print(c)
